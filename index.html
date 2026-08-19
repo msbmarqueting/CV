@@ -186,7 +186,7 @@ img{max-width:100%}
 
 
 *,*::before,*::after{box-sizing:border-box}
-#mob{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+#mob{-webkit-text-size-adjust:100%}
 #mob,#mob{margin:0;padding:0;background:#6478e6}
 :root{--dw:100vw}
 #mob #device{width:100%;margin:0 auto;position:relative;overflow-x:clip}
@@ -199,16 +199,16 @@ img{max-width:100%}
 #mob a{color:inherit;text-decoration:none}
 #mob button{font:inherit}
 #mob /* ============ lienzo 9:16 ============ */
-.st{position:relative;width:100%;height:100dvh;overflow:hidden;isolation:isolate}
+.st{position:relative;width:100%;height:100svh;overflow:hidden;isolation:isolate;contain:layout paint}
 #mob .fr{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
-    width:max(100vw,56.25dvh);aspect-ratio:9/16;container-type:size}
+    width:max(100vw,56.25svh);aspect-ratio:9/16;container-type:size}
 #mob .fr .bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
 #mob .fr .grad{position:absolute;inset:0;z-index:0}
 #mob .lbl,#mob .nm,#mob .pol,#mob .vid,#mob .wa,#mob .rev,#mob .h2,#mob .lst,#mob .row,#mob .cta,#mob .hint2{z-index:2}
 #mob /* costuras difuminadas */
 .fr::before,#mob .fr::after{content:"";position:absolute;left:-1px;right:-1px;z-index:5;
   height:var(--fade,6.5cqh);pointer-events:none;
-  -webkit-backdrop-filter:blur(2.4cqh);backdrop-filter:blur(2.4cqh)}
+  }
 #mob .fr::before{top:-1px;background:linear-gradient(to bottom,rgb(var(--ct,0 0 0)/.8) 0%,rgb(var(--ct,0 0 0)/.3) 40%,rgb(var(--ct,0 0 0)/0) 100%);
   -webkit-mask-image:linear-gradient(to bottom,#000,rgba(0,0,0,.62) 42%,transparent);mask-image:linear-gradient(to bottom,#000,rgba(0,0,0,.62) 42%,transparent)}
 #mob .fr::after{bottom:-1px;background:linear-gradient(to top,rgb(var(--cb,0 0 0)/.8) 0%,rgb(var(--cb,0 0 0)/.3) 40%,rgb(var(--cb,0 0 0)/0) 100%);
@@ -229,8 +229,8 @@ img{max-width:100%}
   border:.13cqh solid rgba(255,255,255,.8);border-radius:1.1cqh;
   font-size:2.3cqh;letter-spacing:.32em;text-indent:.32em;
   text-transform:uppercase;white-space:nowrap;color:#fff}
-#mob .l1{left:57.31cqw;top:5.63cqh;width:32.41cqw;height:2.86cqh;font-size:1.5cqh;
-  letter-spacing:.34em;text-indent:.34em;border-radius:.5cqh}
+#mob .l1{left:auto;right:10.28cqw;top:5.63cqh;width:auto;height:auto;padding:.85cqh 1.5cqh;
+  font-size:1.15cqh;letter-spacing:.34em;text-indent:.34em;border-radius:.5cqh}
 #mob .l2{--ly:5.63cqh}
 #mob .l3{--ly:5.63cqh}
 #mob .l4,#mob .l5{--ly:7.08cqh}
@@ -265,7 +265,7 @@ img{max-width:100%}
   background:linear-gradient(90deg,#12a03e 0%,#2fb84a 45%,#86c645 100%);
   box-shadow:0 1.2cqh 3cqh rgba(12,90,40,.38);font-size:3.6cqh;color:#fff;white-space:nowrap}
 #mob .wa svg{width:4.6cqh;height:4.6cqh;flex:none}
-#mob .cut{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:3;pointer-events:none}
+#mob .cut{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:4;pointer-events:none}
 #mob /* ============ bloques CTA (S3,#mob S4) ============ */
 .cta{position:absolute;left:50%;transform:translateX(-50%);width:var(--cw,78.98cqw);
   display:flex;flex-direction:column;align-items:center;gap:var(--cg,3cqh)}
@@ -322,14 +322,14 @@ img{max-width:100%}
 #mob .im{left:63.06cqw;--iw:21.85cqw}
 #mob .icolink{display:block;width:100%;padding:0;border:0;background:none;cursor:pointer}
 #mob .icolink svg{width:100%;height:auto;display:block;filter:drop-shadow(0 1.6cqh 3cqh rgba(15,25,80,.34))}
-#mob .chip{position:absolute;left:50%;top:calc(100% + 2.6cqh);transform:translate(-50%,-1cqh);
+#mob .chip{position:absolute;left:50%;top:38cqh;transform:translate(-50%,-1cqh);max-width:84cqw;z-index:6;
   display:inline-flex;align-items:center;gap:1cqh;white-space:nowrap;
   padding:1.1cqh 1.1cqh 1.1cqh 2cqh;border-radius:99px;background:#fff;color:#1b1c22;
-  box-shadow:0 1.2cqh 3cqh rgba(20,25,70,.28);font-family:"Helvetica Neue",Arial,sans-serif;font-size:2.1cqh;
+  box-shadow:0 1.2cqh 3cqh rgba(20,25,70,.28);font-family:"Helvetica Neue",Arial,sans-serif;font-size:2.35cqh;
   opacity:0;visibility:hidden;transition:opacity .3s,transform .3s cubic-bezier(.2,.8,.25,1),visibility .3s}
 #mob .chip.on{opacity:1;visibility:visible;transform:translate(-50%,0)}
 #mob .chip .cp{display:inline-flex;align-items:center;justify-content:center;flex:none;
-  width:3.6cqh;height:3.6cqh;border:0;border-radius:50%;background:#eef0f4;color:#41454f;cursor:pointer;padding:0}
+  width:4.4cqh;height:4.4cqh;border:0;border-radius:50%;background:#eef0f4;color:#41454f;cursor:pointer;padding:0}
 #mob .chip .cp svg{width:54%;height:54%}
 #mob .chip .cp.ok{background:#e6f6ec;color:#0f9b3c}
 #mob /* ============ nav ============ */
@@ -343,7 +343,7 @@ img{max-width:100%}
   font-size:10px;letter-spacing:.18em;text-transform:uppercase}
 #mob /* ============ hero pin + zoom ============ */
 .herowrap{position:relative;height:300vh}
-#mob .herost{position:sticky;top:0;height:100dvh;overflow:hidden;background:#efeae4}
+#mob .herost{position:sticky;top:0;height:100svh;overflow:hidden;background:#efeae4}
 #mob .phone{position:absolute;transform-origin:0 0;will-change:transform;max-width:none}
 #mob .screen{position:absolute;transform-origin:0 0;will-change:transform;overflow:hidden;
   border-radius:2.2vw;background:#6478e6}
@@ -358,6 +358,14 @@ img{max-width:100%}
 @keyframes m-hp{0%,100%{transform:translate(-50%,0)}30%{transform:translate(-50%,-13px)}55%{transform:translate(-50%,2px)}}
 #mob .hint .chev{width:16px;opacity:.8;animation:m-cv 1.7s ease-in-out infinite}
 @keyframes m-cv{0%,100%{transform:translateY(-2px);opacity:.45}50%{transform:translateY(2px);opacity:.95}}
+#mob /* ============ reproductor ============ */
+.vov{position:fixed;inset:0;z-index:200;background:rgba(8,10,22,.94);display:flex;
+  align-items:center;justify-content:center;padding:12px}
+.vov .wrap{width:100%;max-width:1100px;aspect-ratio:16/9;background:#000;border-radius:10px;overflow:hidden}
+.vov iframe{width:100%;height:100%;border:0;display:block}
+.vov .x{position:absolute;top:calc(12px + env(safe-area-inset-top,0px));right:14px;
+  width:42px;height:42px;border:0;border-radius:50%;background:rgba(255,255,255,.16);color:#fff;
+  font-size:22px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center}
 #mob /* ============ about ============ */
 .ov{position:fixed;inset:0;z-index:120;background:rgba(18,20,50,.66);display:flex;align-items:center;justify-content:center;padding:18px}
 #mob .ov .box{background:#fff;color:#1b1c22;max-width:560px;width:100%;border-radius:16px;padding:24px;max-height:82dvh;overflow:auto}
@@ -366,8 +374,6 @@ img{max-width:100%}
 #mob .ov p:first-of-type{font-size:17px;color:#111}
 #mob .ov .x{margin-top:16px;background:#111;color:#fff;border:0;border-radius:99px;padding:11px 24px;cursor:pointer;font-family:"Prata",serif;letter-spacing:.12em;font-size:12px}
 #mob .hide{display:none}
-#mob .note{position:fixed;left:8px;bottom:8px;z-index:200;background:rgba(0,0,0,.62);color:#fff;
-  font-family:system-ui,sans-serif;font-size:10px;padding:5px 9px;border-radius:6px;letter-spacing:.02em}
 </style>
 </head>
 <body>
@@ -393,7 +399,7 @@ img{max-width:100%}
     <img class="phone" id="ph" src="assets/iphone.webp" alt="Currículum de March Salellas en un móvil">
     <div class="screen" id="sc">
       <div class="fr">
-        <img class="bg" src="assets/m1.webp" alt="March Salellas Blánquez">
+        <img class="bg" loading="lazy" decoding="async" src="assets/m1.webp" alt="March Salellas Blánquez">
         <img class="pol pa" src="assets/p1.webp" alt="">
         <img class="pol pb" src="assets/p2.webp" alt="">
         <img class="pol pc" src="assets/p3.webp" alt="">
@@ -410,11 +416,12 @@ img{max-width:100%}
 <!-- ===== S2 ¿QUIÉN SOY? ===== -->
 <section class="st" id="s2">
       <div class="fr">
-        <img class="bg" src="assets/m2.webp" alt="">
+        <img class="bg" loading="lazy" decoding="async" src="assets/m2.webp" alt="">
     
     <div class="lbl l2">¿Quién soy?</div>
     <div class="vid v2" data-v="1"><img src="assets/pv1.webp" alt="Mi currículum"><div class="play"><i></i></div></div>
     <a class="wa cw" href="https://wa.me/34699620907?text=Hola%20March%2C%20vengo%20de%20tu%20curr%C3%ADculum%20web." target="_blank" rel="noopener"><svg viewBox="0 0 48 48"><rect x="1" y="1" width="46" height="46" rx="12" fill="#25D366"/><path fill="#fff" d="M24 9.5c-8 0-14.5 6.5-14.5 14.5 0 2.6.7 5 1.9 7.1L9.5 38.5l7.6-2c2 1.1 4.4 1.7 6.9 1.7 8 0 14.5-6.5 14.5-14.5S32 9.5 24 9.5Zm0 26c-2.3 0-4.4-.6-6.2-1.7l-.4-.3-4.5 1.2 1.2-4.4-.3-.5A11.4 11.4 0 0 1 12.5 24c0-6.3 5.2-11.5 11.5-11.5S35.5 17.7 35.5 24 30.3 35.5 24 35.5Zm6.5-8.6c-.4-.2-2.1-1-2.4-1.1-.3-.1-.6-.2-.8.2s-.9 1.1-1.1 1.4c-.2.2-.4.3-.8.1-1.9-.9-3.1-1.7-4.4-3.9-.3-.6.3-.5.9-1.7.1-.2 0-.4 0-.6l-1.1-2.6c-.3-.7-.6-.6-.8-.6h-.7c-.2 0-.6.1-.9.5-.3.4-1.2 1.2-1.2 2.8s1.2 3.3 1.4 3.5c.2.2 2.4 3.7 5.9 5.2 2.2.9 3 1 4.1.8.7-.1 2.1-.9 2.4-1.7.3-.8.3-1.6.2-1.7-.1-.2-.3-.3-.7-.4Z"/></svg>Contáctame</a>
+        <img class="cut" src="assets/m2cut.webp" alt="" decoding="async">
     
   </div>
 </section>
@@ -422,7 +429,7 @@ img{max-width:100%}
 <!-- ===== S3 ¡MIS RESULTADOS! ===== -->
 <section class="st" id="s3">
       <div class="fr">
-        <img class="bg" src="assets/m3.webp" alt="">
+        <img class="bg" loading="lazy" decoding="async" src="assets/m3.webp" alt="">
     
     <div class="lbl l3">¡Mis resultados!</div>
     <div class="vid v3" data-v="2"><img src="assets/pv2.webp" alt="¡a promocionar!"><div class="play"><i></i></div></div>
@@ -436,7 +443,7 @@ img{max-width:100%}
 <!-- ===== S4 RECOMENDACIONES 1 ===== -->
 <section class="st" id="s4">
       <div class="fr">
-        <img class="bg" src="assets/m4.webp" alt="">
+        <img class="bg" loading="lazy" decoding="async" src="assets/m4.webp" alt="">
     
     <div class="lbl l4">Recomendaciones</div>
     <article class="rev r4">
@@ -458,7 +465,7 @@ img{max-width:100%}
 <!-- ===== S5 RECOMENDACIONES 2 ===== -->
 <section class="st" id="s5">
       <div class="fr">
-        <img class="bg" src="assets/m5.webp" alt="">
+        <img class="bg" loading="lazy" decoding="async" src="assets/m5.webp" alt="">
     
     <div class="lbl l5">Recomendaciones</div>
     <article class="rev r5">
@@ -476,7 +483,7 @@ img{max-width:100%}
 <!-- ===== S6 ¡MIS OBJETIVOS! ===== -->
 <section class="st" id="s6">
       <div class="fr">
-        <img class="bg" src="assets/m6.webp" alt="">
+        <img class="bg" loading="lazy" decoding="async" src="assets/m6.webp" alt="">
     
     <div class="lbl l6">¡Mis objetivos!</div>
     <div class="vid v6" data-v="3"><img src="assets/pv3.webp" alt="Mis objetivos"><div class="play"><i></i></div></div>
@@ -487,14 +494,14 @@ img{max-width:100%}
 <!-- ===== S7 TITULITIS ===== -->
 <section class="st" id="s7">
       <div class="fr">
-        <img class="bg" src="assets/m7.webp" alt="">
+        <img class="bg" loading="lazy" decoding="async" src="assets/m7.webp" alt="">
       </div>
 </section>
 
 <!-- ===== S8 CONTACTO ===== -->
 <section class="st" id="s8">
       <div class="fr">
-        <img class="bg" src="assets/m8.webp" alt="">
+        <img class="bg" loading="lazy" decoding="async" src="assets/m8.webp" alt="">
     
     <div class="lbl l8">Contacto</div>
     <div class="row">
@@ -504,16 +511,16 @@ img{max-width:100%}
         <button class="icolink" id="mb" aria-label="Ver mi correo">
           <svg viewBox="0 0 240 216"><path d="M12 74 120 4l108 70v128a10 10 0 0 1-10 10H22a10 10 0 0 1-10-10Z" fill="#f3f1ea"/><path d="M12 202 120 116l108 86a10 10 0 0 1-10 10H22a10 10 0 0 1-10-10Z" fill="#ddd9cc"/><text x="120" y="140" text-anchor="middle" fill="#009ee1" font-family="Helvetica,Arial,sans-serif" font-size="130">@</text></svg>
         </button>
-        <div class="chip" id="chip">
-          <a id="mlink" href="mailto:msb.marqueting@gmail.com?subject=Contacto%20desde%20tu%20curr%C3%ADculum%20web">msb.marqueting@gmail.com</a>
-          <button class="cp" id="cp" aria-label="Copiar correo">
-            <svg viewBox="0 0 24 24"><rect x="8.5" y="8.5" width="12" height="12" rx="2.6" fill="none" stroke="currentColor" stroke-width="2"/><path d="M15.5 4.5h-11a2 2 0 0 0-2 2v11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-          </button>
-        </div>
       </div>
-    </div>
-  </div>
-</section>
+      <div class="chip" id="chip">
+        <a href="mailto:msb.marqueting@gmail.com?subject=Contacto%20desde%20tu%20curr%C3%ADculum%20web">msb.marqueting@gmail.com</a>
+        <button class="cp" id="cp" aria-label="Copiar correo">
+          <svg viewBox="0 0 24 24"><rect x="8.5" y="8.5" width="12" height="12" rx="2.6" fill="none" stroke="currentColor" stroke-width="2"/><path d="M15.5 4.5h-11a2 2 0 0 0-2 2v11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+      </div>
+      </div>
+    </section>
 
 <div class="ov hide" id="ov">
   <div class="box" id="ovbox">
@@ -522,8 +529,6 @@ img{max-width:100%}
     <button class="x" id="ovx">Cerrar</button>
   </div>
 </div>
-
-<div class="note">Preview móvil · no publicada</div>
 
 
 </div>
@@ -615,8 +620,12 @@ R.querySelector("#abtxt").innerHTML=ABOUT.map(p=>"<p>"+p+"</p>").join("");
 /* vídeos */
 R.querySelectorAll(".vid").forEach(v=>{
   v.addEventListener("click",()=>{
-    if(v.dataset.done)return; v.dataset.done="1";
-    v.innerHTML='<iframe src="'+VID[v.dataset.v]+'" allow="autoplay; fullscreen" allowfullscreen title="vídeo"></iframe>';
+    const o=document.createElement("div"); o.className="vov";
+    o.innerHTML='<button class="x" aria-label="Cerrar">&times;</button><div class="wrap"><iframe src="'+VID[v.dataset.v]+'" allow="autoplay; fullscreen" allowfullscreen title="video"></iframe></div>';
+    document.body.appendChild(o); document.body.style.overflow="hidden";
+    const close=()=>{o.remove(); document.body.style.overflow="";};
+    o.querySelector(".x").addEventListener("click",close);
+    o.addEventListener("click",e=>{ if(e.target===o) close(); });
   });
 });
 
@@ -653,7 +662,7 @@ ov.addEventListener("click",e=>{if(e.target===ov)ov.classList.add("hide")});
   function draw(){
     raf=0;
     const vw=innerWidth,vh=innerHeight;
-    const s=Math.max(vw/IW0,vh/IH0),IW=IW0*s,IH=IH0*s;
+    const s=Math.min(vw/IW0,vh/IH0)*0.98,IW=IW0*s,IH=IH0*s;
     const L0=(vw-IW)/2,T0=(vh-IH)/2;
     const rx=L0+RX0*IW, ry=T0+RY0*IH, rw=(RX1-RX0)*IW, rh=(RY1-RY0)*IH;
     const cx=rx+rw/2, cy=ry+rh/2;
