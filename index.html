@@ -342,12 +342,13 @@ img{max-width:100%}
 #mob .nav button,#mob .nav a.nl{background:none;border:0;cursor:pointer;color:#111;font-family:"Prata",serif;
   font-size:10px;letter-spacing:.18em;text-transform:uppercase}
 #mob /* ============ hero pin + zoom ============ */
-.herowrap{position:relative;height:300vh}
+.herowrap{position:relative;height:240svh}
 #mob .herost{position:sticky;top:0;height:100svh;overflow:hidden;background:#efeae4}
-#mob .phone{position:absolute;transform-origin:0 0;will-change:transform;max-width:none}
-#mob .screen{position:absolute;transform-origin:0 0;will-change:transform;overflow:hidden;
-  border-radius:2.2vw;background:#6478e6}
-#mob .screen .fr{position:absolute;left:50%;top:0;transform:translateX(-50%);height:100%;width:auto;aspect-ratio:9/16}
+#mob .hz{position:absolute;left:0;top:0;width:100%;height:100%;transform-origin:0 0;
+  will-change:transform;backface-visibility:hidden}
+#mob .phone{position:absolute;max-width:none;display:block}
+#mob .sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+#mob .scr{position:absolute;max-width:none;display:block;object-fit:cover;opacity:0}
 #mob .hint{position:absolute;left:50%;bottom:calc(5dvh + env(safe-area-inset-bottom,0px));z-index:20;transform:translateX(-50%);
   display:flex;align-items:center;gap:11px;padding:13px 22px 13px 15px;border-radius:99px;
   background:rgba(255,255,255,.92);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
@@ -395,17 +396,11 @@ img{max-width:100%}
 
 <!-- ===== HERO: iPhone en la mano ===== -->
 <div class="herowrap" id="hw">
-  <div class="herost">
-    <img class="phone" id="ph" src="assets/iphone.webp" alt="Currículum de March Salellas en un móvil">
-    <div class="screen" id="sc">
-      <div class="fr">
-        <img class="bg" loading="lazy" decoding="async" src="assets/m1.webp" alt="March Salellas Blánquez">
-        <img class="pol pa" src="assets/p1.webp" alt="">
-        <img class="pol pb" src="assets/p2.webp" alt="">
-        <img class="pol pc" src="assets/p3.webp" alt="">
-        <div class="lbl l1">Currículum Vitae</div>
-        <h1 class="nm">March<br>Salellas<br>Blánquez</h1>
-      </div>
+  <div class="herost" id="hs">
+    <h1 class="sr">March Salellas Blánquez — Currículum Vitae</h1>
+    <div class="hz" id="hz">
+      <img class="phone" id="ph" src="assets/heroph.webp" alt="Currículum de March Salellas Blánquez en la pantalla de un móvil">
+      <img class="scr" id="sc" src="assets/m1full.webp" alt="">
     </div>
     <div class="hint" id="hint"><span>Baja para entrar</span>
       <svg class="chev" viewBox="0 0 24 32"><path d="M4 10l8 8 8-8M4 20l8 8 8-8" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -655,34 +650,55 @@ ov.addEventListener("click",e=>{if(e.target===ov)ov.classList.add("hide")});
 
 /* hero pin + zoom hacia la pantalla del iPhone */
 (function(){
-  const IW0=558,IH0=1000,RX0=0.2969,RX1=0.7161,RY0=0.2515,RY1=0.7573;
-  const w=R.querySelector("#hw"),ph=R.querySelector("#ph"),sc=R.querySelector("#sc"),hn=R.querySelector("#hint"),nav=R.querySelector("#nav");
-  let raf=0,moved=false;
-  const nudge=setTimeout(()=>{if(!moved)hn.classList.add("push")},1800);
+  /* rectangulo util de la pantalla del mockup, medido sobre la imagen */
+  var IW0=558,IH0=1000,RX0=0.29659,RX1=0.71774,RY0=0.24550,RY1=0.75800;
+  var w=R.querySelector("#hw"),st=R.querySelector("#hs"),hz=R.querySelector("#hz"),
+      ph=R.querySelector("#ph"),sc=R.querySelector("#sc"),
+      hn=R.querySelector("#hint"),nav=R.querySelector("#nav");
+  if(!w||!hz) return;
+  var Z=1,dx=0,dy=0,vh=1,raf=0,moved=false,last=-1;
+  var nudge=setTimeout(function(){ if(!moved) hn.classList.add("push"); },1800);
+
+  /* se recalcula solo al cambiar de tamano, no en cada fotograma */
+  function layout(){
+    var b=st.getBoundingClientRect(), vw=b.width; vh=b.height;
+    if(!vw||!vh) return;
+    var s=Math.min(vw/IW0,vh/IH0)*0.98, IW=IW0*s, IH=IH0*s;
+    var L0=(vw-IW)/2, T0=(vh-IH)/2;
+    var rx=L0+RX0*IW, ry=T0+RY0*IH, rw=(RX1-RX0)*IW, rh=(RY1-RY0)*IH;
+    ph.style.left=L0+"px"; ph.style.top=T0+"px"; ph.style.width=IW+"px"; ph.style.height=IH+"px";
+    sc.style.left=rx+"px"; sc.style.top=ry+"px"; sc.style.width=rw+"px"; sc.style.height=rh+"px";
+    var ox=rx+rw/2, oy=ry+rh/2;
+    hz.style.transformOrigin=ox+"px "+oy+"px";
+    Z=Math.max(vw/rw,vh/rh); dx=vw/2-ox; dy=vh/2-oy; last=-1;
+  }
+
   function draw(){
     raf=0;
-    const vw=innerWidth,vh=innerHeight;
-    const s=Math.min(vw/IW0,vh/IH0)*0.98,IW=IW0*s,IH=IH0*s;
-    const L0=(vw-IW)/2,T0=(vh-IH)/2;
-    const rx=L0+RX0*IW, ry=T0+RY0*IH, rw=(RX1-RX0)*IW, rh=(RY1-RY0)*IH;
-    const cx=rx+rw/2, cy=ry+rh/2;
-    const Z=Math.max(vw/rw,vh/rh);
-    const dx=vw/2-cx, dy=vh/2-cy;
-    const span=w.offsetHeight-vh;
-    const t=Math.min(1,Math.max(0,-w.getBoundingClientRect().top/Math.max(1,span)));
-    const e=Math.min(1,t/0.72), k=Math.pow(Z,e), q=(k-1)/(Z-1||1);
-    const tf="translate("+(dx*q)+"px,"+(dy*q)+"px) scale("+k+")";
-    ph.style.width=IW+"px"; ph.style.height=IH+"px"; ph.style.left=L0+"px"; ph.style.top=T0+"px";
-    ph.style.transformOrigin=(cx-L0)+"px "+(cy-T0)+"px";
-    ph.style.transform=tf;
-    sc.style.left=rx+"px"; sc.style.top=ry+"px"; sc.style.width=rw+"px"; sc.style.height=rh+"px";
-    sc.style.transformOrigin=(cx-rx)+"px "+(cy-ry)+"px";
-    sc.style.transform=tf;
-    hn.style.opacity=String(Math.max(0,1-t*8));
-    nav.classList.toggle("on",e>0.9);
+    var span=w.offsetHeight-vh; if(span<1) span=1;
+    var t=-w.getBoundingClientRect().top/span;
+    t=t<0?0:(t>1?1:t);
+    if(Math.abs(t-last)<0.0004) return;
+    last=t;
+    var e=t/0.85; if(e>1) e=1;
+    var k=Math.pow(Z,e), q=(k-1)/(Z-1||1);
+    hz.style.transform="translate3d("+(dx*q)+"px,"+(dy*q)+"px,0) scale("+k+")";
+    var o=(e-0.30)/0.35; sc.style.opacity=String(o<0?0:(o>1?1:o));
+    var h=1-t*8; hn.style.opacity=String(h<0?0:h);
+    hn.style.visibility=t>0.13?"hidden":"visible";
+    nav.classList.toggle("on",e>0.92);
   }
-  const on=()=>{ if(!moved&&scrollY>4){moved=true;clearTimeout(nudge);hn.classList.remove("push");} if(!raf)raf=requestAnimationFrame(draw); };
-  draw(); addEventListener("scroll",on,{passive:true}); addEventListener("resize",on);
+
+  function on(){
+    if(!moved&&window.pageYOffset>4){moved=true;clearTimeout(nudge);hn.classList.remove("push");}
+    if(!raf) raf=requestAnimationFrame(draw);
+  }
+  function re(){ layout(); on(); }
+  layout(); draw();
+  addEventListener("scroll",on,{passive:true});
+  addEventListener("resize",re);
+  addEventListener("orientationchange",re);
+  if(ph.complete===false) ph.addEventListener("load",re);
 })();
 
 })();
