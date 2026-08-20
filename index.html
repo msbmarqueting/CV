@@ -359,14 +359,11 @@ img{max-width:100%}
 @keyframes m-hp{0%,100%{transform:translate(-50%,0)}30%{transform:translate(-50%,-13px)}55%{transform:translate(-50%,2px)}}
 #mob .hint .chev{width:16px;opacity:.8;animation:m-cv 1.7s ease-in-out infinite}
 @keyframes m-cv{0%,100%{transform:translateY(-2px);opacity:.45}50%{transform:translateY(2px);opacity:.95}}
-#mob /* ============ reproductor ============ */
-.vov{position:fixed;inset:0;z-index:200;background:rgba(8,10,22,.94);display:flex;
-  align-items:center;justify-content:center;padding:12px}
-.vov .wrap{width:100%;max-width:1100px;aspect-ratio:16/9;background:#000;border-radius:10px;overflow:hidden}
-.vov iframe{width:100%;height:100%;border:0;display:block}
-.vov .x{position:absolute;top:calc(12px + env(safe-area-inset-top,0px));right:14px;
-  width:42px;height:42px;border:0;border-radius:50%;background:rgba(255,255,255,.16);color:#fff;
-  font-size:22px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center}
+#mob /* ============ reproductor en linea ============ */
+.vid{-webkit-tap-highlight-color:transparent}
+#mob .vid.on{cursor:default;background:#000}
+#mob .vid.on .play{display:none}
+#mob .vid iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block;background:#000}
 #mob /* ============ about ============ */
 .ov{position:fixed;inset:0;z-index:120;background:rgba(18,20,50,.66);display:flex;align-items:center;justify-content:center;padding:18px}
 #mob .ov .box{background:#fff;color:#1b1c22;max-width:560px;width:100%;border-radius:16px;padding:24px;max-height:82dvh;overflow:auto}
@@ -394,19 +391,16 @@ img{max-width:100%}
   </ul>
 </nav>
 
-<!-- ===== HERO: iPhone en la mano ===== -->
-<div class="herowrap" id="hw">
-  <div class="herost" id="hs">
+<!-- ===== S1 PORTADA ===== -->
+<section class="st" id="s1">
+  <div class="fr">
+    <img class="bg" id="m1" src="assets/m1full.webp" alt="March Salellas Blánquez — Currículum Vitae" fetchpriority="high" decoding="async">
     <h1 class="sr">March Salellas Blánquez — Currículum Vitae</h1>
-    <div class="hz" id="hz">
-      <img class="phone" id="ph" src="assets/heroph.webp" alt="Currículum de March Salellas Blánquez en la pantalla de un móvil">
-      <img class="scr" id="sc" src="assets/m1full.webp" alt="">
-    </div>
-    <div class="hint" id="hint"><span>Baja para entrar</span>
-      <svg class="chev" viewBox="0 0 24 32"><path d="M4 10l8 8 8-8M4 20l8 8 8-8" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </div>
   </div>
-</div>
+  <div class="hint" id="hint"><span>Baja para entrar</span>
+    <svg class="chev" viewBox="0 0 24 32"><path d="M4 10l8 8 8-8M4 20l8 8 8-8" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </div>
+</section>
 
 <!-- ===== S2 ¿QUIÉN SOY? ===== -->
 <section class="st" id="s2">
@@ -508,7 +502,7 @@ img{max-width:100%}
         </button>
       </div>
       <div class="chip" id="chip">
-        <a href="mailto:msb.marqueting@gmail.com?subject=Contacto%20desde%20tu%20curr%C3%ADculum%20web">msb.marqueting@gmail.com</a>
+        <a id="mlink" href="mailto:msb.marqueting@gmail.com?subject=Contacto%20desde%20tu%20curr%C3%ADculum%20web">msb.marqueting@gmail.com</a>
         <button class="cp" id="cp" aria-label="Copiar correo">
           <svg viewBox="0 0 24 24"><rect x="8.5" y="8.5" width="12" height="12" rx="2.6" fill="none" stroke="currentColor" stroke-width="2"/><path d="M15.5 4.5h-11a2 2 0 0 0-2 2v11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
         </button>
@@ -606,22 +600,30 @@ const ABOUT=["¡Me presento!",
 "Dicho esto, ¡gracias por visitar mi currículum y espero hablar contigo por WhatsApp o por correo!"];
 
 R.querySelectorAll(".cw").forEach(a=>a.href=WA_URL);
-R.querySelector("#wk").href=WA_URL;
-R.querySelector("#lt").href=WA_URL;
-const ml=R.querySelector("#mlink"); ml.textContent=EMAIL;
-ml.href="mailto:"+EMAIL+"?subject="+encodeURIComponent("Contacto desde tu currículum web");
-R.querySelector("#abtxt").innerHTML=ABOUT.map(p=>"<p>"+p+"</p>").join("");
+const Q=id=>R.querySelector(id);
+if(Q("#wk")) Q("#wk").href=WA_URL;
+if(Q("#lt")) Q("#lt").href=WA_URL;
+const ml=Q("#mlink");
+if(ml){ ml.textContent=EMAIL; ml.href="mailto:"+EMAIL+"?subject="+encodeURIComponent("Contacto desde tu currículum web"); }
+if(Q("#abtxt")) Q("#abtxt").innerHTML=ABOUT.map(p=>"<p>"+p+"</p>").join("");
 
-/* vídeos */
+/* vídeos: se reproducen en el mismo sitio, en 16:9 */
 R.querySelectorAll(".vid").forEach(v=>{
-  v.addEventListener("click",()=>{
-    const o=document.createElement("div"); o.className="vov";
-    o.innerHTML='<button class="x" aria-label="Cerrar">&times;</button><div class="wrap"><iframe src="'+VID[v.dataset.v]+'" allow="autoplay; fullscreen" allowfullscreen title="video"></iframe></div>';
-    document.body.appendChild(o); document.body.style.overflow="hidden";
-    const close=()=>{o.remove(); document.body.style.overflow="";};
-    o.querySelector(".x").addEventListener("click",close);
-    o.addEventListener("click",e=>{ if(e.target===o) close(); });
-  });
+  v.setAttribute("role","button");
+  v.setAttribute("tabindex","0");
+  const play=()=>{
+    if(v.dataset.on) return;
+    v.dataset.on="1"; v.classList.add("on");
+    const f=document.createElement("iframe");
+    f.src=VID[v.dataset.v];
+    f.title="Vídeo de March Salellas Blánquez";
+    f.setAttribute("allow","autoplay; encrypted-media; fullscreen; picture-in-picture");
+    f.setAttribute("allowfullscreen","");
+    f.setAttribute("frameborder","0");
+    v.innerHTML=""; v.appendChild(f);
+  };
+  v.addEventListener("click",play);
+  v.addEventListener("keydown",e=>{ if(e.key==="Enter"||e.key===" "){e.preventDefault();play();} });
 });
 
 /* bloques CTA: 2 s después de ver la sección */
@@ -635,70 +637,46 @@ const io=new IntersectionObserver((es)=>{
 R.querySelectorAll("[data-cta]").forEach(c=>io.observe(c));
 
 /* correo con copiar */
-const chip=R.querySelector("#chip"),cp=R.querySelector("#cp");
-R.querySelector("#mb").addEventListener("click",()=>chip.classList.toggle("on"));
-cp.addEventListener("click",()=>{
+const chip=Q("#chip"),cp=Q("#cp"),mb=Q("#mb");
+if(mb&&chip) mb.addEventListener("click",()=>chip.classList.toggle("on"));
+if(cp) cp.addEventListener("click",()=>{
   const done=()=>{cp.classList.add("ok");setTimeout(()=>cp.classList.remove("ok"),2000);};
   if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(EMAIL).then(done).catch(done);}else done();
 });
 
 /* about */
-const ov=R.querySelector("#ov");
-R.querySelector("#ab").addEventListener("click",()=>ov.classList.remove("hide"));
-R.querySelector("#ovx").addEventListener("click",()=>ov.classList.add("hide"));
-ov.addEventListener("click",e=>{if(e.target===ov)ov.classList.add("hide")});
+const ov=Q("#ov");
+if(ov){
+  if(Q("#ab")) Q("#ab").addEventListener("click",()=>ov.classList.remove("hide"));
+  if(Q("#ovx")) Q("#ovx").addEventListener("click",()=>ov.classList.add("hide"));
+  ov.addEventListener("click",e=>{if(e.target===ov)ov.classList.add("hide")});
+}
 
-/* hero pin + zoom hacia la pantalla del iPhone */
+/* portada fija: nav y aviso de scroll */
 (function(){
-  /* rectangulo util de la pantalla del mockup, medido sobre la imagen */
-  var IW0=558,IH0=1000,RX0=0.29659,RX1=0.71774,RY0=0.24550,RY1=0.75800;
-  var w=R.querySelector("#hw"),st=R.querySelector("#hs"),hz=R.querySelector("#hz"),
-      ph=R.querySelector("#ph"),sc=R.querySelector("#sc"),
-      hn=R.querySelector("#hint"),nav=R.querySelector("#nav");
-  if(!w||!hz) return;
-  var Z=1,dx=0,dy=0,vh=1,raf=0,moved=false,last=-1;
-  var nudge=setTimeout(function(){ if(!moved) hn.classList.add("push"); },1800);
-
-  /* se recalcula solo al cambiar de tamano, no en cada fotograma */
-  function layout(){
-    var b=st.getBoundingClientRect(), vw=b.width; vh=b.height;
-    if(!vw||!vh) return;
-    var s=Math.min(vw/IW0,vh/IH0)*0.98, IW=IW0*s, IH=IH0*s;
-    var L0=(vw-IW)/2, T0=(vh-IH)/2;
-    var rx=L0+RX0*IW, ry=T0+RY0*IH, rw=(RX1-RX0)*IW, rh=(RY1-RY0)*IH;
-    ph.style.left=L0+"px"; ph.style.top=T0+"px"; ph.style.width=IW+"px"; ph.style.height=IH+"px";
-    sc.style.left=rx+"px"; sc.style.top=ry+"px"; sc.style.width=rw+"px"; sc.style.height=rh+"px";
-    var ox=rx+rw/2, oy=ry+rh/2;
-    hz.style.transformOrigin=ox+"px "+oy+"px";
-    Z=Math.max(vw/rw,vh/rh); dx=vw/2-ox; dy=vh/2-oy; last=-1;
-  }
-
+  var hn=R.querySelector("#hint"),nav=R.querySelector("#nav");
+  if(!nav) return;
+  var raf=0,moved=false;
+  var nudge=setTimeout(function(){ if(!moved&&hn) hn.classList.add("push"); },1800);
   function draw(){
     raf=0;
-    var span=w.offsetHeight-vh; if(span<1) span=1;
-    var t=-w.getBoundingClientRect().top/span;
-    t=t<0?0:(t>1?1:t);
-    if(Math.abs(t-last)<0.0004) return;
-    last=t;
-    var e=t/0.85; if(e>1) e=1;
-    var k=Math.pow(Z,e), q=(k-1)/(Z-1||1);
-    hz.style.transform="translate3d("+(dx*q)+"px,"+(dy*q)+"px,0) scale("+k+")";
-    var o=(e-0.30)/0.35; sc.style.opacity=String(o<0?0:(o>1?1:o));
-    var h=1-t*8; hn.style.opacity=String(h<0?0:h);
-    hn.style.visibility=t>0.13?"hidden":"visible";
-    nav.classList.toggle("on",e>0.92);
+    var vh=window.innerHeight||1;
+    var y=window.pageYOffset||document.documentElement.scrollTop||0;
+    if(hn){
+      var o=1-(y/vh)*4; if(o<0)o=0; if(o>1)o=1;
+      hn.style.opacity=String(o);
+      hn.style.visibility=o<=0.02?"hidden":"visible";
+    }
+    nav.classList.toggle("on", y>vh*0.55);
   }
-
   function on(){
-    if(!moved&&window.pageYOffset>4){moved=true;clearTimeout(nudge);hn.classList.remove("push");}
+    if(!moved&&(window.pageYOffset||0)>4){moved=true;clearTimeout(nudge);if(hn)hn.classList.remove("push");}
     if(!raf) raf=requestAnimationFrame(draw);
   }
-  function re(){ layout(); on(); }
-  layout(); draw();
+  draw();
   addEventListener("scroll",on,{passive:true});
-  addEventListener("resize",re);
-  addEventListener("orientationchange",re);
-  if(ph.complete===false) ph.addEventListener("load",re);
+  addEventListener("resize",on);
+  addEventListener("orientationchange",on);
 })();
 
 })();
