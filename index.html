@@ -194,7 +194,7 @@ html[data-layout="mob"]{scroll-snap-type:y mandatory}
 @media (min-width:820px){#mob,#mob{background:#15161c}
 :root{--dw:min(432px,56.25vh)}
 #mob #device{width:var(--dw);box-shadow:0 0 0 1px rgba(255,255,255,.14),0 24px 70px rgba(0,0,0,.6)}
-#mob .nav{left:50%!important;right:auto!important;transform:translateX(-50%);width:var(--dw)}}
+}
 #mob img{display:block;max-width:100%}
 #mob{color:#fff;font-family:"Prata",Georgia,serif;overflow-x:clip;-webkit-font-smoothing:antialiased}
 #mob a{color:inherit;text-decoration:none}
@@ -333,15 +333,6 @@ html[data-layout="mob"]{scroll-snap-type:y mandatory}
   width:4.4cqh;height:4.4cqh;border:0;border-radius:50%;background:#eef0f4;color:#41454f;cursor:pointer;padding:0}
 #mob .chip .cp svg{width:54%;height:54%}
 #mob .chip .cp.ok{background:#e6f6ec;color:#0f9b3c}
-#mob /* ============ nav ============ */
-.nav{position:fixed;top:0;left:0;right:0;z-index:80;height:52px;background:#fff;color:#111;
-  display:flex;align-items:center;justify-content:space-between;padding:0 16px;
-  opacity:0;pointer-events:none;transition:opacity .45s}
-#mob .nav.on{opacity:1;pointer-events:auto}
-#mob .nav .logo{font-family:"Rozha One",serif;font-size:17px}
-#mob .nav ul{display:flex;align-items:center;gap:18px;margin:0;padding:0;list-style:none}
-#mob .nav button,#mob .nav a.nl{background:none;border:0;cursor:pointer;color:#111;font-family:"Prata",serif;
-  font-size:10px;letter-spacing:.18em;text-transform:uppercase}
 #mob /* ============ hero pin + zoom ============ */
 .herowrap{position:relative;height:240svh}
 #mob .herost{position:sticky;top:0;height:100svh;overflow:hidden;background:#efeae4}
@@ -366,14 +357,6 @@ html[data-layout="mob"]{scroll-snap-type:y mandatory}
 #mob .vid.on .play{display:none}
 #mob .vid video{position:absolute;inset:0;width:100%;height:100%;border:0;display:block;object-fit:contain;background:#000}
 #mob .vid iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block;background:#000}
-#mob /* ============ about ============ */
-.ov{position:fixed;inset:0;z-index:120;background:rgba(18,20,50,.66);display:flex;align-items:center;justify-content:center;padding:18px}
-#mob .ov .box{background:#fff;color:#1b1c22;max-width:560px;width:100%;border-radius:16px;padding:24px;max-height:82dvh;overflow:auto}
-#mob .ov h3{font-family:"Rozha One",serif;font-weight:400;margin:0 0 14px;font-size:22px;line-height:1.15}
-#mob .ov p{margin:0 0 11px;line-height:1.6;font-size:15px}
-#mob .ov p:first-of-type{font-size:17px;color:#111}
-#mob .ov .x{margin-top:16px;background:#111;color:#fff;border:0;border-radius:99px;padding:11px 24px;cursor:pointer;font-family:"Prata",serif;letter-spacing:.12em;font-size:12px}
-#mob .hide{display:none}
 </style>
 </head>
 <body>
@@ -383,15 +366,6 @@ html[data-layout="mob"]{scroll-snap-type:y mandatory}
 
 </div>
 <div id="mob">
-
-<nav class="nav" id="nav">
-  <span class="logo">MSB</span>
-  <ul>
-    <li><a class="nl" id="wk" href="https://wa.me/34699620907?text=Hola%20March%2C%20vengo%20de%20tu%20curr%C3%ADculum%20web." target="_blank" rel="noopener">Work</a></li>
-    <li><button id="ab">About</button></li>
-    <li><a class="nl" id="lt" href="https://wa.me/34699620907?text=Hola%20March%2C%20vengo%20de%20tu%20curr%C3%ADculum%20web." target="_blank" rel="noopener">Let&rsquo;s talk</a></li>
-  </ul>
-</nav>
 
 <!-- ===== S1 PORTADA ===== -->
 <section class="st" id="s1">
@@ -513,13 +487,6 @@ html[data-layout="mob"]{scroll-snap-type:y mandatory}
       </div>
     </section>
 
-<div class="ov hide" id="ov">
-  <div class="box" id="ovbox">
-    <h3>Bienvenido/a a la sección más remota de mi CV</h3>
-    <div id="abtxt"></div>
-    <button class="x" id="ovx">Cerrar</button>
-  </div>
-</div>
 
 
 </div>
@@ -593,22 +560,11 @@ const WA_URL="https://wa.me/"+WA_PHONE+"?text="+encodeURIComponent("Hola March, 
 /* videos alojados en la propia web: reproductor nativo, pantalla completa y 16:9 exacto.
    Los MP4 no se descargan hasta que el usuario toca play. */
 const VID={1:"assets/v1.mp4",2:"assets/v2.mp4",3:"assets/v3.mp4"};
-const ABOUT=["¡Me presento!",
-"Soy March Salellas, un chico de 26 años, vivo en Figueres y llevo seis años como productor musical: un oficio que obliga a manejar por igual la parte creativa y la técnica.",
-"Estudié Ingeniería de Sonido en Etecam Girona, música en el Taller de Músics de Barcelona y Marketing Digital en la Pompeu Fabra.",
-"En diciembre de 2025 lo apliqué todo a mi propio proyecto, Ataraxia: llenamos el Teatre El Jardí (ubicado en Figueres y el más grande de toda la provincia de Girona) con más de 600 entradas y casi 2.000 € recaudados para La Marató de 3Cat.",
-"Lo conseguimos con una campaña que combinó una versión muy bien hecha de una canción famosa, varios vídeos virales, 11 colaboraciones con empresas locales, campañas de ads y orgánicas, venta física de entradas en cinco comercios y marketing de guerrilla.",
-"Ahora me siento en el momento de buscar retos comerciales, proyección profesional y una empresa con la que crecer.",
-"Mi objetivo con ella es demostrar mi valor diferencial: la creatividad lateral y, sobre todo, saber convertirla en algo real y ejecutable.",
-"Dicho esto, ¡gracias por visitar mi currículum y espero hablar contigo por WhatsApp o por correo!"];
 
 R.querySelectorAll(".cw").forEach(a=>a.href=WA_URL);
 const Q=id=>R.querySelector(id);
-if(Q("#wk")) Q("#wk").href=WA_URL;
-if(Q("#lt")) Q("#lt").href=WA_URL;
 const ml=Q("#mlink");
 if(ml){ ml.textContent=EMAIL; ml.href="mailto:"+EMAIL+"?subject="+encodeURIComponent("Contacto desde tu currículum web"); }
-if(Q("#abtxt")) Q("#abtxt").innerHTML=ABOUT.map(p=>"<p>"+p+"</p>").join("");
 
 /* vídeos: reproductor nativo en el mismo hueco 16:9, con pantalla completa */
 R.querySelectorAll(".vid").forEach(v=>{
@@ -653,33 +609,22 @@ if(cp) cp.addEventListener("click",()=>{
   if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(EMAIL).then(done).catch(done);}else done();
 });
 
-/* about */
-const ov=Q("#ov");
-if(ov){
-  if(Q("#ab")) Q("#ab").addEventListener("click",()=>ov.classList.remove("hide"));
-  if(Q("#ovx")) Q("#ovx").addEventListener("click",()=>ov.classList.add("hide"));
-  ov.addEventListener("click",e=>{if(e.target===ov)ov.classList.add("hide")});
-}
-
-/* portada fija: nav y aviso de scroll */
+/* portada: aviso de "Baja para entrar" */
 (function(){
-  var hn=R.querySelector("#hint"),nav=R.querySelector("#nav");
-  if(!nav) return;
+  var hn=R.querySelector("#hint");
+  if(!hn) return;
   var raf=0,moved=false;
-  var nudge=setTimeout(function(){ if(!moved&&hn) hn.classList.add("push"); },1800);
+  var nudge=setTimeout(function(){ if(!moved) hn.classList.add("push"); },1800);
   function draw(){
     raf=0;
     var vh=window.innerHeight||1;
     var y=window.pageYOffset||document.documentElement.scrollTop||0;
-    if(hn){
-      var o=1-(y/vh)*4; if(o<0)o=0; if(o>1)o=1;
-      hn.style.opacity=String(o);
-      hn.style.visibility=o<=0.02?"hidden":"visible";
-    }
-    nav.classList.toggle("on", y>vh*0.55);
+    var o=1-(y/vh)*4; if(o<0)o=0; if(o>1)o=1;
+    hn.style.opacity=String(o);
+    hn.style.visibility=o<=0.02?"hidden":"visible";
   }
   function on(){
-    if(!moved&&(window.pageYOffset||0)>4){moved=true;clearTimeout(nudge);if(hn)hn.classList.remove("push");}
+    if(!moved&&(window.pageYOffset||0)>4){moved=true;clearTimeout(nudge);hn.classList.remove("push");}
     if(!raf) raf=requestAnimationFrame(draw);
   }
   draw();
