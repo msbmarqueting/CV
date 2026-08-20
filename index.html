@@ -363,6 +363,7 @@ img{max-width:100%}
 .vid{-webkit-tap-highlight-color:transparent}
 #mob .vid.on{cursor:default;background:#000}
 #mob .vid.on .play{display:none}
+#mob .vid video{position:absolute;inset:0;width:100%;height:100%;border:0;display:block;object-fit:contain;background:#000}
 #mob .vid iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block;background:#000}
 #mob /* ============ about ============ */
 .ov{position:fixed;inset:0;z-index:120;background:rgba(18,20,50,.66);display:flex;align-items:center;justify-content:center;padding:18px}
@@ -588,8 +589,9 @@ if(document.documentElement.dataset.layout==="mob"){
 const WA_PHONE="34699620907";
 const EMAIL="msb.marqueting@gmail.com";
 const WA_URL="https://wa.me/"+WA_PHONE+"?text="+encodeURIComponent("Hola March, vengo de tu currículum web.");
-const D=id=>"https://drive.google.com/file/d/"+id+"/preview";
-const VID={1:D("1sxpwL3r9JyCB--QukbCEtPGQlsxU1X5I"),2:D("1ocAn3Ma5_LO7wn25EtpFfyO8_QZMB-jp"),3:D("12EHKSnm20jHNtvpR_NRC05SzFf8pqXDb")};
+/* videos alojados en la propia web: reproductor nativo, pantalla completa y 16:9 exacto.
+   Los MP4 no se descargan hasta que el usuario toca play. */
+const VID={1:"assets/v1.mp4",2:"assets/v2.mp4",3:"assets/v3.mp4"};
 const ABOUT=["¡Me presento!",
 "Soy March Salellas, un chico de 26 años, vivo en Figueres y llevo seis años como productor musical: un oficio que obliga a manejar por igual la parte creativa y la técnica.",
 "Estudié Ingeniería de Sonido en Etecam Girona, música en el Taller de Músics de Barcelona y Marketing Digital en la Pompeu Fabra.",
@@ -607,20 +609,26 @@ const ml=Q("#mlink");
 if(ml){ ml.textContent=EMAIL; ml.href="mailto:"+EMAIL+"?subject="+encodeURIComponent("Contacto desde tu currículum web"); }
 if(Q("#abtxt")) Q("#abtxt").innerHTML=ABOUT.map(p=>"<p>"+p+"</p>").join("");
 
-/* vídeos: se reproducen en el mismo sitio, en 16:9 */
+/* vídeos: reproductor nativo en el mismo hueco 16:9, con pantalla completa */
 R.querySelectorAll(".vid").forEach(v=>{
   v.setAttribute("role","button");
   v.setAttribute("tabindex","0");
   const play=()=>{
     if(v.dataset.on) return;
     v.dataset.on="1"; v.classList.add("on");
-    const f=document.createElement("iframe");
-    f.src=VID[v.dataset.v];
-    f.title="Vídeo de March Salellas Blánquez";
-    f.setAttribute("allow","autoplay; encrypted-media; fullscreen; picture-in-picture");
-    f.setAttribute("allowfullscreen","");
-    f.setAttribute("frameborder","0");
-    v.innerHTML=""; v.appendChild(f);
+    const thumb=v.querySelector("img");
+    const el=document.createElement("video");
+    el.src=VID[v.dataset.v];
+    if(thumb) el.poster=thumb.getAttribute("src");
+    el.controls=true;
+    el.preload="auto";
+    el.setAttribute("playsinline","");            /* iOS: en su hueco, no a pantalla completa a la fuerza */
+    el.setAttribute("webkit-playsinline","");
+    el.setAttribute("controlsList","nodownload noplaybackrate");
+    el.setAttribute("title","Vídeo de March Salellas Blánquez");
+    v.innerHTML=""; v.appendChild(el);
+    const go=el.play();
+    if(go&&go.catch) go.catch(()=>{});           /* si el navegador bloquea el autoplay, quedan los controles */
   };
   v.addEventListener("click",play);
   v.addEventListener("keydown",e=>{ if(e.key==="Enter"||e.key===" "){e.preventDefault();play();} });
